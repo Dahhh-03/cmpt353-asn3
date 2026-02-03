@@ -1,0 +1,44 @@
+<!-- Form to create new posts with user feedback -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>New Post</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <a href="index.html">Home</a> 
+        <a href="posts.html">View Posts</a> 
+        <a href="newpost.html">Create Post</a>
+    </nav>
+
+    <h1>Create New Post</h1>
+    <form id="post-form">
+        <div>Topic:<br><input type="text" id="topic" placeholder="Choose Topic..." required></div>
+        <div>Content:<br><textarea id="data" placeholder="What's on your mind?"></textarea></div>
+        <button type="submit">Submit Post</button>
+    </form>
+    <p id="feedback" style="color: green; font-weight: bold;"></p>
+
+    <script>
+        document.getElementById('post-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const topic = document.getElementById('topic').value;
+            const data = document.getElementById('data').value;
+
+            try {
+                const response = await fetch('/api/posts', { // API endpoint
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ topic, data })
+                });
+
+                if (response.ok) {
+                    document.getElementById('feedback').innerText = "Post created!"; // Feedback 
+                    document.getElementById('post-form').reset(); // Clear form 
+                }
+            } catch (err) { console.error('Error posting:', err); }
+        });
+    </script>
+</body>
+</html>
