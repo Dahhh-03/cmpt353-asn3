@@ -1,0 +1,44 @@
+<!-- Displays all posts and auto-refreshes using setInterval -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Posts</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <a href="index.html">Home</a> 
+        <a href="posts.html">View Posts</a> 
+        <a href="newpost.html">Create Post</a>
+    </nav>
+
+    <h1>All Posts</h1>
+    <div id="posts-container">Loading posts...</div>
+
+    <script>
+        async function fetchPosts() {
+            try {
+                const response = await fetch('/api/posts'); // 
+                const posts = await response.json();
+                const container = document.getElementById('posts-container');
+                container.innerHTML = '';
+                
+                posts.reverse().forEach(post => { // Show newest first
+                    const div = document.createElement('div');
+                    div.className = 'post-card';
+                    div.innerHTML = `
+                        <h3>${post.topic}</h3>
+                        <p>${post.data}</p>
+                        <div class="timestamp">${post.timestamp}</div>
+                    `;
+                    container.appendChild(div);
+                });
+            } catch (err) { console.error('Error fetching posts:', err); }
+        }
+
+        fetchPosts();
+        // Update every 3 seconds 
+        setInterval(fetchPosts, 3000);
+    </script>
+</body>
+</html>
