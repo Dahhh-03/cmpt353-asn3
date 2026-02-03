@@ -1,0 +1,11 @@
+services:
+  app:
+    build: .
+    container_name: posting_system
+    ports:
+      - "80:8080" # Map host port 80 to internal port 8080
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    stdin_open: true
+    tty: true
