@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 
 const app = express();
-const PORT = 8080;
+const PORT = 80;
 const DATA_FILE = path.join(__dirname, 'data', 'posts.json');
 
 // Middleware
@@ -57,6 +57,6 @@ app.post('/api/posts', (req, res) => {
     res.status(201).json({ message: 'Post created!', post: newPost });
 });
 
-app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT, () => {
     console.log(`Server up and running on http://localhost:${PORT}`);
 });
