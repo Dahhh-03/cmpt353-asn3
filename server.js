@@ -40,8 +40,10 @@ app.get('/api/posts', (req, res) => {
 app.post('/api/posts', (req, res) => {
     const { topic, data } = req.body;
     
-    if (!topic || !data) {
-        return res.status(400).json({ error: 'Topic and data are required' });
+    // VALIDATION GUARD: This prevents the server from crashing or saving empty data
+    if (!topic || !data || topic.trim() === "" || data.trim() === "") {
+        console.log("Bad Request: Missing topic or data");
+        return res.status(400).json({ error: "Topic and data are required." });
     }
 
     const posts = loadPosts();

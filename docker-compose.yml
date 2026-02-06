@@ -3,7 +3,7 @@ services:
     build: .
     container_name: posting_system
     ports:
-      - "80:8080" # Map host port 80 to internal port 8080
+      - "80:80" # This maps the host port http://localhost (80) to the container's port 80
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
